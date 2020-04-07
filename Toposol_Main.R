@@ -39,10 +39,10 @@ tf <- tf.models(dem0, glacier, months)
 
 # Output of tf.models() is a 4-dimensional Rasterstack.
 #   Each layer is a raster including pixels located within the glacier
-#   shapefile. Values show the average change in direct insolation over
-#   the given time period due to:
-#   tf[[1]] = slope and aspect
-#   tf[[2]] = cast shadows (component of topographic shading)
-#   tf[[1]] = shaded relief (component of topographic shading)
-#   tf[[1]] = total impact of topography
-# *more info in Cryosphere publication 
+#   shapefile. Values show the average change in direct solar radiation
+#   for the given time period due to:
+#   tf[[1]] = Slope and aspect
+#   tf[[2]] = Cast shadows (component of topographic shading)
+#   tf[[3]] = Shaded relief (component of topographic shading)
+#   tf[[4]] = Combined (total impact of all topographic attributes)
+# *more info in The Cryosphere publication 
