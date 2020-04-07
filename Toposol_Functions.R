@@ -220,7 +220,7 @@ tf.models <- function(dem, glacier, months, dir.shift = NULL){
   P2MOD = matrix((rowSums(P2MO*is.finite(P2MO),na.rm=TRUE)/length(jdays)),nrow=nrow(dem),ncol=ncol(dem))
   P3MOD = matrix((rowSums(P3MO*is.finite(P3MO),na.rm=TRUE)/length(jdays)),nrow=nrow(dem),ncol=ncol(dem))
   P4MOD = matrix((rowSums(P4MO*is.finite(P4MO),na.rm=TRUE)/length(jdays)),nrow=nrow(dem),ncol=ncol(dem))
-  # cREATE STACK TO SAVE
+  # CREATE STACK TO SAVE
   S_A <- make.raster((P3MOD - P2MOD), dem)
   CS <- make.raster((P3MOD - P1MOD), dem)
   TOT <- make.raster((P3MOD - P4MOD), dem)
