@@ -1,6 +1,6 @@
 ## TopoSol model
 ### Impacts of topographic shading on direct solar radiation for valley glaciers in complex topography
-#### [Link to associated publication](https://doi.org/10.5194/tc-13-29-2019)
+#### [Link to publication](https://doi.org/10.5194/tc-13-29-2019)
 
 #### Requires
 1. **Digital Elevation Model (DEM)**
@@ -28,4 +28,15 @@
 **tf[[4]]** = Combined (total impact of all topographic attributes)
 
 *if a save_path is defined, an ESRI compatible geotiff file will be saved within a new folder called TopoSol*
+
+**Note:** Values do not show totals in direct insolation, but a change based on different topographic features.
+
+<br>
+
+### New model! 
+#### Impacts of topography, DEM resolution, and different DEM products
+#### [Link to new publication](https://doi.org/10.3389/feart.2019.00216)
+- Model code available under **TopoRad** repository
+
+*TopoRad* is a model that includes all shortwave componenets: direct, diffuse, and reflected solar radiation. Code is available, but may need to be updated.
 
