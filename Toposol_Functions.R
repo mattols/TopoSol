@@ -59,14 +59,16 @@ julian.days <- function(mo, year){
 }
 
 # calculate tf models
-tf.models <- function(dem, glacier, months, dir.shift = NULL){
+tf.models <- function(dem0, glacier, months, dir.shift = NULL){
   strt = Sys.time()
   ## Check variables for correct projection
-  if(!isLonLat(dem) | !isLonLat(glacier)){
-    stop("!Error: projection is not lat/lon")}
+  if(!isLonLat(dem0) | !isLonLat(glacier)){
+    stop("projection is not lat/lon")}
   ## VARIABLES (STAY CONSTANT OVER TIME)
   # trim rasters for specific glacier
-  dem <- crop.raster(dem, glacier)
+  dem <- crop.raster(dem0, glacier)
+  if(ncell(dem0) == ncell(dem)){
+    stop("input DEM extent should be larger (for cast shadow effect)")}
   dmat = as.matrix(dem)
   # slope and aspect (8=queen case, 4=rook case)
   s <- terrain(dem, opt='slope',unit='radians',neighbors=8)
