@@ -61,9 +61,12 @@ julian.days <- function(mo, year){
 # calculate tf models
 tf.models <- function(dem, glacier, months, dir.shift = NULL){
   strt = Sys.time()
+  ## Check variables for correct projection
+  if(!isLonLat(dem) | !isLonLat(glacier)){
+    stop("!Error: projection is not lat/lon")}
   ## VARIABLES (STAY CONSTANT OVER TIME)
   # trim rasters for specific glacier
-  dem <- crop.raster(dem0, glacier)
+  dem <- crop.raster(dem, glacier)
   dmat = as.matrix(dem)
   # slope and aspect (8=queen case, 4=rook case)
   s <- terrain(dem, opt='slope',unit='radians',neighbors=8)
@@ -71,6 +74,7 @@ tf.models <- function(dem, glacier, months, dir.shift = NULL){
   # central coordinates for GLACIER
   lat <- round((dem@extent@ymax + dem@extent@ymin)/2,5); lat_rad = lat * pi/180
   lon <- round((dem@extent@xmax + dem@extent@xmin)/2,5); lon_rad = lon * pi/180
+  if(is.na(lat)){stop("Error: DEM has different lat/lon structure")}
   # Z FACTOR and RESOLUTION BASED ON LATITUDE
   Z = (1/(111320*cos(radians(lat))))
   RESOL_DEM <- res(dem)[1]/Z
@@ -237,7 +241,12 @@ tf.models <- function(dem, glacier, months, dir.shift = NULL){
   ex@ymax = ex@ymax+0.001
   tf_models = mask(crop(tmp_stk, ex), glacier)
   # save
-  writeRaster(tf_models, filename = "tf_models.grd", format="raster")
+  if (!is.null(save_path)){
+    spath = paste0(save_path,"/TopoSol")
+    dir.create(spath)
+    # writeRaster(tf_models, filename = paste0(spath,"/tf_models.grd"), format="raster")           # R file
+    writeRaster (tf_models, filename = paste0(spath,"/tf_models.tif"), options = c('TFW = YES'))   # ESRI GeoTiff
+  }
   ##########################################################################
   #### END LAT LOOP #####
   end = Sys.time() - strt 
