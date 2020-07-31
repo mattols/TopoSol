@@ -64,6 +64,8 @@ tf.models <- function(dem0, glacier, months, dir.shift = NULL){
   ## Check variables for correct projection
   if(!isLonLat(dem0) | !isLonLat(glacier)){
     stop("projection is not lat/lon")}
+  ## Check for similar DEM structure
+  try(dem0@extent@xmin, stop("\n !!ERROR: Unknown DEM structure \n  Replace all 'dem@extent@' variables in code"))
   ## VARIABLES (STAY CONSTANT OVER TIME)
   # trim rasters for specific glacier
   dem <- crop.raster(dem0, glacier)
@@ -111,7 +113,7 @@ tf.models <- function(dem0, glacier, months, dir.shift = NULL){
     #################################################################################################
     # DAY LOOP
     for (i in 1:length(jd)){
-      print(paste(">>> Starting",months.Date(day_S),'-',i,"of",length(jd), "days -- at Lat of", lat,"deg"))
+      print(paste(">>> Starting month",mo,'-',i,"of",length(jd), "days -- at Lat of", lat,"deg"))
       
       # 15 MIN TIME INTERVALS
       TIME_INTERVAL = (15/4)*pi/180 # 4 per hour / 15deg/4 (convert for radians)
@@ -141,7 +143,7 @@ tf.models <- function(dem0, glacier, months, dir.shift = NULL){
       # Calculate irradiance at each moment m throughout day i 
       for (m in 1:length(ZENITH)){
         print(paste("making shade for...",m, "of",length(ZENITH),
-                    "moments -- Date:",months.Date(day_S),i,"- at Lat of",round(lat,2), 'deg'))
+                    "moments -- Month",mo," Day",i,"- at Lat of",round(lat,2), 'deg'))
         
         # Shading algorythm (Corripio, 2003)
         sv = normalvector(ZENITH[m],AZIMUTH[m])
