@@ -130,7 +130,7 @@ tf.models <- function(dem0, glacier, months, dir.shift = NULL){
       # Change to 360 degrees
       AZIMUTH = c(180 - AZIMUTH[1:SOL_NOON], 180 + AZIMUTH[(SOL_NOON+1):length(AZIMUTH)])
       # CHANGE ASPECT?
-      if (!is.null(dir.shift)){
+      if (is.null(dir.shift)){
         AZIMUTH = change.aspect(AZIMUTH, dir.shift)
       }
       
@@ -236,7 +236,7 @@ tf.models <- function(dem0, glacier, months, dir.shift = NULL){
   ###########################################################################
   # SAVE ALL VALUES TO STACK
   tmp_stk = stack(S_A, CS, SR, TOT, dem)
-  names(tmp_stk) = c("Slope and Aspect", "Cast Shadow", "Shaded Relief", "Combined")
+  names(tmp_stk) = c("Slope and Aspect", "Cast Shadow", "Shaded Relief", "Combined", "DEM")
   
   # redefine extent for better images
   # Create Extent
