@@ -9,15 +9,6 @@ require(insol)
 require(raster)
 require(rgdal)
 
-#create directory
-if (dir.exists(paste0(save_path,"TopoSol"))){
-  print("Directory exists...")
-} else{
-  dir.create(paste0(save_path,"TopoSol"))
-  print(paste0("Directory created: >", save_path,"TopoSol"))
-}
-setwd(paste0(save_path,"TopoSol"))
-
 # import DEM
 dem0 <- raster(dem_path)
 

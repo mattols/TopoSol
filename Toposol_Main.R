@@ -19,9 +19,9 @@ dirpath = ""
 dem_path = ""
 # DEFINE GLACIER SHAPEFILE PATH (include .shp)
 gsh_path = ""
-# DEFINE SAVE PATH (location to save data)
-#   will create new folder "TopoSol" in current working directory, and save output of tf.model
-save_path = paste0(getwd(),"/")
+# DEFINE SAVE PATH (optional location to save data)
+#   if provided, will save output of tf.model to specified folder
+save_path = NULL
 # DEFINE YEAR/MONTHS OF INTEREST 
 # (use same number for single month)
 year = 2016; start_month = 4; end_month = 9

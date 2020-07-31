@@ -241,15 +241,14 @@ tf.models <- function(dem0, glacier, months, dir.shift = NULL){
   # redefine extent for better images
   # Create Extent
   ex = extent(glacier)
-  ex@ymin = ex@ymin-0.001
-  ex@ymax = ex@ymax+0.001
+  if(ex@ymin < 0){ # southern hemisphere?
+    ex@ymin = ex@ymin+0.001;ex@ymax = ex@ymax-0.001
+  } else{ex@ymin = ex@ymin-0.001;ex@ymax = ex@ymax+0.001}
   tf_models = mask(crop(tmp_stk, ex), glacier)
-  # save
+  # save (optional)
   if (!is.null(save_path)){
-    spath = paste0(save_path,"/TopoSol")
-    dir.create(spath)
     # writeRaster(tf_models, filename = paste0(spath,"/tf_models.grd"), format="raster")           # R file
-    writeRaster (tf_models, filename = paste0(spath,"/tf_models.tif"), options = c('TFW = YES'))   # ESRI GeoTiff
+    writeRaster (tf_models, filename = paste0(save_path,"/tf_models.tif"), options = c('TFW = YES'))   # ESRI GeoTiff
   }
   ##########################################################################
   #### END LAT LOOP #####
