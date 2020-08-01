@@ -235,15 +235,13 @@ tf.models <- function(dem0, glacier, months, dir.shift = NULL){
   SR <- make.raster(((P2MOD - P4MOD) - (P3MOD - P1MOD)), dem) # double check
   ###########################################################################
   # SAVE ALL VALUES TO STACK
-  tmp_stk = stack(S_A, CS, SR, TOT, dem)
+  tmp_stk <<- stack(S_A, CS, SR, TOT, dem)
   names(tmp_stk) = c("Slope and Aspect", "Cast Shadow", "Shaded Relief", "Combined", "DEM")
   
   # redefine extent for better images
   # Create Extent
   ex = extent(glacier)
-  if(ex@ymin < 0){ # southern hemisphere?
-    ex@ymin = ex@ymin+0.001;ex@ymax = ex@ymax-0.001
-  } else{ex@ymin = ex@ymin-0.001;ex@ymax = ex@ymax+0.001}
+  ex@ymin = ex@ymin-0.001;ex@ymax = ex@ymax+0.001
   tf_models = mask(crop(tmp_stk, ex), glacier)
   # save (optional)
   if (!is.null(save_path)){
